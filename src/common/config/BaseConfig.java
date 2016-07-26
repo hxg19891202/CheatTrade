@@ -11,7 +11,7 @@ import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.render.ViewType;
 import common.routes.BaseRoutes;
-import common.routes.HelloController;
+import common.routes.BaseController;
 
 public class BaseConfig extends JFinalConfig {
 	public void configConstant(Constants me) {
@@ -25,7 +25,7 @@ public class BaseConfig extends JFinalConfig {
 	}
 
 	public void configRoute(Routes me) {
-		me.add("/hello", HelloController.class);
+		me.add("/", BaseController.class);
 		me.add(new BaseRoutes());
 	}
 
