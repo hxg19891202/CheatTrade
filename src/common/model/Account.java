@@ -1,6 +1,9 @@
 package common.model;
 
-public class Account {
+import com.jfinal.plugin.activerecord.Model;
+
+public class Account extends Model<Account>{
+	private static final long serialVersionUID = 1L;
 	public String name;
 	public String acctid;
 	public String ymtid;

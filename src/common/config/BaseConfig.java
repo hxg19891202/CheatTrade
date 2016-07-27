@@ -8,8 +8,11 @@ import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
+import com.jfinal.plugin.activerecord.dialect.AnsiSqlDialect;
+import com.jfinal.plugin.activerecord.dialect.OracleDialect;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.render.ViewType;
+
 import common.routes.BaseRoutes;
 import common.routes.BaseController;
 
@@ -30,13 +33,18 @@ public class BaseConfig extends JFinalConfig {
 	}
 
 	public void configPlugin(Plugins me) {
-		C3p0Plugin C3p0Plugin = new C3p0Plugin(PropKit.get("jdbc.url"), PropKit.get("jdbc.user"), PropKit.get("jdbc.password").trim());
-		me.add(C3p0Plugin);
+		//配置oracle、teradata数据源
+		C3p0Plugin c3p0_orcl = new C3p0Plugin(PropKit.get("jdbc.url"), PropKit.get("jdbc.user"), PropKit.get("jdbc.password").trim());
+		me.add(c3p0_orcl);
+		C3p0Plugin c3p0_td = new C3p0Plugin(PropKit.get("jdbc.url"), PropKit.get("jdbc.user"), PropKit.get("jdbc.password").trim());
+		me.add(c3p0_td);
 		
-		// 配置ActiveRecord插件
-		ActiveRecordPlugin arp = new ActiveRecordPlugin(C3p0Plugin);
-		me.add(arp);
-		
+		ActiveRecordPlugin arp_orcl = new ActiveRecordPlugin("oracle", c3p0_orcl);
+		me.add(arp_orcl);
+		arp_orcl.setDialect(new OracleDialect());
+		ActiveRecordPlugin arp_td = new ActiveRecordPlugin("teradata", c3p0_orcl);
+		me.add(arp_td);
+		arp_td.setDialect(new AnsiSqlDialect());
 	}
 
 	public void configInterceptor(Interceptors me) {

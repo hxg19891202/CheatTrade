@@ -1,6 +1,7 @@
 package common.routes;
 
 import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Db;
 
 public class MarketController extends Controller{
 	//默认访问方法
@@ -12,7 +13,7 @@ public class MarketController extends Controller{
 		render("/common/createTask.html");
 	}
 	public void importInfo() throws Exception {
-		
+//		List<Account> acctList=Db.find()
 	}
 	public void globalAnalysis() throws Exception {
 		render("/common/globalAnalysis.html");
